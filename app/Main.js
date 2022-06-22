@@ -1,38 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Components
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import HomeGuest from "./components/HomeGuest";
+import About from "./components/About";
+import Terms from "./components/Terms";
 
 const Main = () => {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <HomeGuest />
-      <footer className="border-top text-center small text-muted py-3">
-        <p>
-          <a href="/" className="mx-1">
-            Home
-          </a>{" "}
-          |
-          <a className="mx-1" href="/about-us">
-            About Us
-          </a>{" "}
-          |
-          <a className="mx-1" href="/terms">
-            Terms
-          </a>
-        </p>
-        <p className="m-0">
-          Copyright &copy; {new Date().getFullYear()}
-          <a href="/" className="text-muted">
-            &nbsp;ComplexApp
-          </a>
-          . All rights reserved.
-        </p>
-      </footer>
-    </>
+      <Routes>
+        <Route path="/" element={<HomeGuest />} />
+        <Route path="/about-us" element={<About />} />
+        <Route path="/terms" element={<Terms />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 };
 
