@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HeaderLoggedOut from "./HeaderLoggedOut";
+import HeaderLoggedIn from "./HeaderLoggedIn";
 
 const Header = () => {
-  let loggedOut = true;
+  const [loggedIn, setLoggedIn] = useState(
+    Boolean(localStorage.getItem("complexAppToken"))
+  );
   return (
     <header className="header-bar bg-primary mb-3">
       <div className="container d-flex flex-column flex-md-row align-items-center p-3">
@@ -13,7 +16,11 @@ const Header = () => {
             ComplexApp{" "}
           </Link>
         </h4>
-        {loggedOut ? <HeaderLoggedOut /> : ""}
+        {loggedIn ? (
+          <HeaderLoggedIn setLoggedIn={setLoggedIn} />
+        ) : (
+          <HeaderLoggedOut setLoggedIn={setLoggedIn} />
+        )}
       </div>
     </header>
   );
