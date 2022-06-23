@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from "react";
+import Axios from "axios";
 
 const HeaderLoggedOut = function () {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
+  const handleSubmit = async function (e) {
+    e.preventDefault();
+    try {
+      const response = await Axios.post("http://localhost:8080/login", {
+        username,
+        password
+      });
+
+      if (response.data) {
+        console.log("Login: ", response.data);
+      } else {
+        console.log("Incorrect username or password");
+      }
+    } catch (err) {
+      console.log("There was an error: ", err.message);
+    }
+  };
+
   return (
-    <form className="mb-0 pt-2 pt-md-0">
+    <form className="mb-0 pt-2 pt-md-0" onSubmit={handleSubmit}>
       <div className="row align-items-center">
         <div className="col-md mr-0 pr-md-0 mb-3 mb-md-0">
           <input
