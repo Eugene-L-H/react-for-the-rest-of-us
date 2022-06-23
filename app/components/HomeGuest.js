@@ -1,20 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import Page from "./Page";
 
 const HomeGuest = function () {
+  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const handleSubmit = async function (e) {
     e.preventDefault();
-
     try {
       await Axios.post("http://localhost:8080/register", {
-        username: "test",
-        email: "test@test.com",
-        password: "qwerty123456"
+        username,
+        email,
+        password
       });
       console.log("User was successfully created");
     } catch (err) {
-      console.log("There was and error: ", err.message);
+      console.log("There was an error: ", err.message);
     }
   };
 
@@ -43,6 +46,7 @@ const HomeGuest = function () {
                 type="text"
                 placeholder="Pick a username"
                 autoComplete="off"
+                onChange={e => setUsername(e.target.value)}
               />
             </div>
 
@@ -57,6 +61,7 @@ const HomeGuest = function () {
                 type="text"
                 placeholder="you@example.com"
                 autoComplete="off"
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className="form-group">
@@ -69,6 +74,7 @@ const HomeGuest = function () {
                 className="form-control"
                 type="password"
                 placeholder="Create a password"
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
             <button
