@@ -1,9 +1,25 @@
-import React from "react";
-import Container from "../Container";
+import React, { useEffect } from "react";
+import Axios from "axios";
+import Page from "./Page";
 
-const HomeGuest = () => {
+const HomeGuest = function () {
+  const handleSubmit = async function (e) {
+    e.preventDefault();
+
+    try {
+      await Axios.post("http://localhost:8080/register", {
+        username: "test",
+        email: "test@test.com",
+        password: "qwerty123456"
+      });
+      console.log("User was successfully created");
+    } catch (err) {
+      console.log("There was and error: ", err.message);
+    }
+  };
+
   return (
-    <Container wide={true}>
+    <Page title="OurApp | Welcome!" wide={true}>
       <div className="row align-items-center">
         <div className="col-lg-7 py-3 py-md-5">
           <h1 className="display-3">Remember Writing?</h1>
@@ -15,7 +31,7 @@ const HomeGuest = () => {
           </p>
         </div>
         <div className="col-lg-5 pl-lg-5 pb-3 py-lg-5">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username-register" className="text-muted mb-1">
                 <small>Username</small>
@@ -64,7 +80,7 @@ const HomeGuest = () => {
           </form>
         </div>
       </div>
-    </Container>
+    </Page>
   );
 };
 
