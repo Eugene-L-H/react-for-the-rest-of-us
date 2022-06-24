@@ -20,7 +20,7 @@ const HeaderLoggedIn = function (props) {
       <a href="#" className="mr-2">
         <img
           className="small-header-avatar"
-          src="https://gravatar.com/avatar/b9408a09298632b5151200f3449434ef?s=128"
+          src={localStorage.getItem("complexAppAvatar")}
         />
       </a>
       <a className="btn btn-sm btn-success mr-2" href="/create-post">
