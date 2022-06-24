@@ -11,14 +11,14 @@ const CreatePost = function () {
   const handleSubmit = async function (e) {
     e.preventDefault();
     try {
-      await Axios.post("/create-post", {
+      const response = await Axios.post("/create-post", {
         title,
         body,
         token: localStorage.getItem("complexAppToken")
       });
 
       // Redirect to new post url
-      navigate("/post/123");
+      navigate(`/post/${response.data}`);
 
       console.log("post submitted");
     } catch (err) {
