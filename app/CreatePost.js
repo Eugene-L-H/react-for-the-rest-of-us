@@ -1,27 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
+import Axios from "axios";
 import Page from "./components/Page";
 
 const CreatePost = function () {
+  const [title, setTitle] = useState();
+  const [body, setBody] = useState();
+
+  const handleSubmit = async function (e) {
+    e.preventDefault();
+    try {
+      await Axios.post("/create-post", {
+        title,
+        body,
+        token: localStorage.getItem("complexAppToken")
+      });
+      console.log("post submitted");
+    } catch (err) {
+      console.log("There was a problem: ", err.message);
+    }
+  };
   return (
-    <Page>
-      <form>
+    <Page title="Our App | New Post">
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label for="post-title" className="text-muted mb-1">
+          <label htmlFor="post-title" className="text-muted mb-1">
             <small>Title</small>
           </label>
           <input
-            autofocus
+            autoFocus
             name="title"
             id="post-title"
             className="form-control form-control-lg form-control-title"
             type="text"
             placeholder=""
-            autocomplete="off"
+            autoComplete="off"
+            onChange={e => setTitle(e.target.value)}
           />
         </div>
 
         <div className="form-group">
-          <label for="post-body" className="text-muted mb-1 d-block">
+          <label htmlFor="post-body" className="text-muted mb-1 d-block">
             <small>Body Content</small>
           </label>
           <textarea
@@ -29,10 +47,13 @@ const CreatePost = function () {
             id="post-body"
             className="body-content tall-textarea form-control"
             type="text"
+            onChange={e => setBody(e.target.value)}
           ></textarea>
         </div>
 
-        <button class="btn btn-primary">Save New Post</button>
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Save New Post
+        </button>
       </form>
     </Page>
   );
