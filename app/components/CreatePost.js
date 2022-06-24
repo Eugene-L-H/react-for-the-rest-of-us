@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import Page from "./components/Page";
+import Page from "./Page";
 
 const CreatePost = function () {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = async function (e) {
     e.preventDefault();
@@ -14,6 +16,10 @@ const CreatePost = function () {
         body,
         token: localStorage.getItem("complexAppToken")
       });
+
+      // Redirect to new post url
+      navigate("/post/123");
+
       console.log("post submitted");
     } catch (err) {
       console.log("There was a problem: ", err.message);
