@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import Page from "./Page";
 
-const CreatePost = function () {
+const CreatePost = function (props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const CreatePost = function () {
       });
 
       // Redirect to new post url
+      props.addFlashMessage("Congrats, you successfully created a post.");
       navigate(`/post/${response.data}`);
 
       console.log("post submitted");
