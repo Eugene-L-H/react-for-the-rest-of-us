@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import Page from "./Page";
 import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 const CreatePost = function (props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const navigate = useNavigate();
   const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
 
   const handleSubmit = async function (e) {
     e.preventDefault();
@@ -16,7 +18,7 @@ const CreatePost = function (props) {
       const response = await Axios.post("/create-post", {
         title,
         body,
-        token: localStorage.getItem("complexAppToken")
+        token: appState.user.token
       });
 
       // Redirect to new post url
@@ -25,7 +27,6 @@ const CreatePost = function (props) {
         value: "Congrats, you successfully created a post."
       });
       navigate(`/post/${response.data}`);
-
       console.log("post submitted");
     } catch (err) {
       console.log("There was a problem: ", err.message);
